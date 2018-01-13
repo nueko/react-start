@@ -1,3 +1,5 @@
+import { dispatch } from '../helpers';
+
 export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED';
 export const INCREMENT = 'counter/INCREMENT';
 export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED';
@@ -9,7 +11,7 @@ const initialState = {
   isDecrementing: false
 };
 
-export const counter = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case INCREMENT_REQUESTED:
       return {
@@ -42,54 +44,14 @@ export const counter = (state = initialState, action) => {
   }
 };
 
-export const increment = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    });
+export const increment = dispatch(INCREMENT_REQUESTED, INCREMENT);
 
-    dispatch({
-      type: INCREMENT
-    });
-  };
-};
+export const incrementAsync = dispatch(INCREMENT_REQUESTED, d =>
+  setTimeout(() => d({ type: INCREMENT }), 2000)
+);
 
-export const incrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    });
+export const decrement = dispatch(DECREMENT_REQUESTED, DECREMENT);
 
-    return setTimeout(() => {
-      dispatch({
-        type: INCREMENT
-      });
-    }, 3000);
-  };
-};
-
-export const decrement = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    });
-
-    dispatch({
-      type: DECREMENT
-    });
-  };
-};
-
-export const decrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    });
-
-    return setTimeout(() => {
-      dispatch({
-        type: DECREMENT
-      });
-    }, 3000);
-  };
-};
+export const decrementAsync = dispatch(DECREMENT_REQUESTED, d =>
+  setTimeout(() => d({ type: DECREMENT }), 2000)
+);
