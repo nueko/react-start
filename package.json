@@ -7,10 +7,31 @@
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17"
   },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "src/**/*.{json,css,js,jsx}": [
+      "prettier --single-quote --write",
+      "git add"
+    ],
+    "*.{png,jpeg,jpg,gif,svg}": [
+      "imagemin-lint-staged",
+      "git add"
+    ]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "precommit": "lint-staged",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "imagemin-lint-staged": "^0.3.0",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.10.2"
   }
 }
